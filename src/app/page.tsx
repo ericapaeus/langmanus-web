@@ -8,12 +8,15 @@ import { ScrollArea } from "~/components/ui/scroll-area";
 import { TooltipProvider } from "~/components/ui/tooltip";
 import { sendMessage, useInitTeamMembers, useStore } from "~/core/store";
 import { cn } from "~/core/utils";
+import { useTranslation } from '~/i18n/useTranslation';
+import { LoadingScreen } from "~/app/_components/LoadingScreen";
 
 import { AppHeader } from "./_components/AppHeader";
 import { InputBox } from "./_components/InputBox";
 import { MessageHistoryView } from "./_components/MessageHistoryView";
 
 export default function HomePage() {
+  const { t, isLoading, error, retry } = useTranslation();
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -45,6 +48,27 @@ export default function HomePage() {
   useInitTeamMembers();
   useAutoScrollToBottom(scrollAreaRef, responding);
 
+  if (error) {
+    return (
+      <div className="flex h-screen w-full flex-col items-center justify-center gap-4">
+        <h2 className="text-xl font-semibold">{t('errorTitle')}</h2>
+        <p className="text-muted-foreground">
+          {t('errorDescription')}
+        </p>
+        <button
+          onClick={retry}
+          className="rounded bg-primary px-4 py-2 text-white hover:bg-primary/90"
+        >
+          {t('retry')}
+        </button>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
   return (
     <TooltipProvider delayDuration={150}>
       <ScrollArea className="h-screen w-full" ref={scrollAreaRef}>
@@ -70,7 +94,7 @@ export default function HomePage() {
             {messages.length === 0 && (
               <div className="flex w-[640px] translate-y-[-32px] flex-col">
                 <h3 className="mb-2 text-center text-3xl font-medium">
-                  👋 Hello, there!
+                  {t('greeting')}
                 </h3>
                 <div className="px-4 text-center text-lg text-gray-400">
                   <a
@@ -79,10 +103,9 @@ export default function HomePage() {
                     rel="noopener noreferrer"
                     className="underline hover:text-blue-600"
                   >
-                    LangManus
+                    {t('appTitle')}
                   </a>
-                  , built on cutting-edge language models, helps you search on
-                  web, browse information, and handle complex tasks.
+                  {t('description')}
                 </div>
               </div>
             )}

@@ -22,6 +22,7 @@ import {
 import { Atom } from "~/core/icons";
 import { setEnabledTeamMembers, useStore } from "~/core/store";
 import { cn } from "~/core/utils";
+import { useTranslation } from '~/i18n/useTranslation';
 
 export function InputBox({
   className,
@@ -41,6 +42,7 @@ export function InputBox({
 }) {
   const teamMembers = useStore((state) => state.teamMembers);
   const enabledTeamMembers = useStore((state) => state.enabledTeamMembers);
+  const { t } = useTranslation();
 
   const [message, setMessage] = useState("");
   const [deepThinkingMode, setDeepThinkMode] = useState(false);
@@ -115,7 +117,7 @@ export function InputBox({
             "m-0 w-full resize-none border-none px-4 py-3 text-lg",
             size === "large" ? "min-h-32" : "min-h-4",
           )}
-          placeholder="What can I do for you?"
+          placeholder={t("inputPlaceholder")}
           value={message}
           onCompositionStart={() => setImeStatus("active")}
           onCompositionEnd={() => setImeStatus("inactive")}
@@ -143,7 +145,7 @@ export function InputBox({
                 </TooltipTrigger>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56">
-                <DropdownMenuLabel>Agents</DropdownMenuLabel>
+                <DropdownMenuLabel>{t("agents")}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {teamMembers.map((member) => (
                   <Tooltip key={member.name}>
@@ -166,7 +168,7 @@ export function InputBox({
                           member.name.slice(1)}
                         {member.is_optional && (
                           <span className="text-xs text-gray-400">
-                            (Optional)
+                            {t("optionalSuffix")}
                           </span>
                         )}
                       </DropdownMenuCheckboxItem>
@@ -179,7 +181,7 @@ export function InputBox({
               </DropdownMenuContent>
             </DropdownMenu>
             <TooltipContent>
-              <p>Enable or disable agents</p>
+              <p>{t("enableAgents")}</p>
             </TooltipContent>
           </Tooltip>
           <Tooltip>
@@ -195,18 +197,11 @@ export function InputBox({
                 }}
               >
                 <Atom className="h-4 w-4" />
-                <span>Deep Think</span>
+                <span>{t("deepThink")}</span>
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>
-                Deep thinking mode. Think before planning.
-                <br />
-                <br />
-                <span className="text-xs text-gray-300">
-                  This feature may cost more tokens and time.
-                </span>
-              </p>
+              <p dangerouslySetInnerHTML={{ __html: t("deepThinkingDescription") }} />
             </TooltipContent>
           </Tooltip>
 
@@ -223,11 +218,11 @@ export function InputBox({
                 }}
               >
                 <GlobalOutlined className="h-4 w-4" />
-                <span>Search</span>
+                <span>{t("search")}</span>
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Search before planning</p>
+              <p>{t("searchBeforePlanning")}</p>
             </TooltipContent>
           </Tooltip>
         </div>
@@ -253,7 +248,7 @@ export function InputBox({
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>{responding ? "Stop" : "Send"}</p>
+              <p>{responding ? t("cancel") : t("send")}</p>
             </TooltipContent>
           </Tooltip>
         </div>

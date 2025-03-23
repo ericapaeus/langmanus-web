@@ -10,6 +10,7 @@ import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 import { type ToolCallTask } from "~/core/workflow";
+import { useTranslation } from '~/i18n/useTranslation';
 
 export function ToolCallView({ task }: { task: ToolCallTask }) {
   if (task.payload.toolName === "tavily_search") {
@@ -50,6 +51,7 @@ function CrawlToolCallView({ task }: { task: ToolCallTask<{ url: string }> }) {
   const title = useMemo(() => {
     return pageCache.get(task.payload.input.url);
   }, [task.payload.input.url]);
+  const { t } = useTranslation();
   return (
     <div>
       <div className="flex items-center gap-2">
@@ -57,7 +59,7 @@ function CrawlToolCallView({ task }: { task: ToolCallTask<{ url: string }> }) {
           <GlobalOutlined className="h-4 w-4 text-sm" />
         </div>
         <div>
-          <span>Reading</span>{" "}
+          <span>{t('reading')}</span>{" "}
           <a
             className="text-sm font-bold"
             href={task.payload.input.url}
@@ -88,6 +90,7 @@ function TravilySearchToolCallView({
       return [];
     }
   }, [task.payload.output]);
+  const { t } = useTranslation();
   return (
     <div>
       <div className="flex items-center gap-2">
@@ -95,7 +98,7 @@ function TravilySearchToolCallView({
           <SearchOutlined className="h-4 w-4 text-sm" />
         </div>
         <div>
-          Searching for{" "}
+          {t('searchingFor')}{" "}
           <span className="font-bold">
             &quot;{task.payload.input.query}&quot;
           </span>
@@ -109,7 +112,7 @@ function TravilySearchToolCallView({
             </div>
             <div>
               <span className="text-sm text-gray-500">
-                {results.length} results found
+                {t('resultsFound').replace('{count}', results.length.toString())}
               </span>
             </div>
           </div>
@@ -157,6 +160,7 @@ function PythonReplToolCallView({
 }: {
   task: ToolCallTask<{ code: string }>;
 }) {
+  const { t } = useTranslation();
   return (
     <div>
       <div className="flex items-center gap-2">
@@ -164,7 +168,7 @@ function PythonReplToolCallView({
           <PythonOutlined className="h-4 w-4 text-sm" />
         </div>
         <div>
-          <span>Writing and executing Python Code</span>
+          <span>{t('writingPython')}</span>
         </div>
       </div>
       {task.payload.input.code && (
@@ -179,6 +183,7 @@ function PythonReplToolCallView({
 }
 
 function BashToolCallView({ task }: { task: ToolCallTask<{ cmd: string }> }) {
+  const { t } = useTranslation();
   return (
     <div>
       <div className="flex items-center gap-2">
@@ -187,7 +192,7 @@ function BashToolCallView({ task }: { task: ToolCallTask<{ cmd: string }> }) {
         </div>
         <div>
           <span>
-            Executing <a className="font-medium">Bash Command</a>
+            {t('executing')} <a className="font-medium">{t('executingBash')}</a>
           </span>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import { parse } from "best-effort-json-parser";
 import { useMemo, useRef, useState } from "react";
+import { useTranslation } from '~/i18n/useTranslation';
 
 import { useAutoScrollToBottom } from "~/components/hooks/useAutoScrollToBottom";
 import { useOnStateChangeEffect } from "~/components/hooks/useOnStateChangeEffect";
@@ -42,6 +43,7 @@ export function WorkflowProgressView({
   }, [workflow]);
 
   useAutoScrollToBottom(mainRef, !workflow.isCompleted);
+  const { t } = useTranslation();
 
   return (
     <div className="flex flex-col gap-4">
@@ -64,7 +66,7 @@ export function WorkflowProgressView({
                 }}
               >
                 <div className="flex h-2 w-2 rounded-full bg-gray-400"></div>
-                <div>{getStepName(step)}</div>
+                <div>{t(step.agentName + '-step')}</div>
               </li>
             ))}
           </ol>
@@ -74,7 +76,7 @@ export function WorkflowProgressView({
             {steps.map((step, stepIndex) => (
               <li key={step.id} className="flex flex-col gap-2">
                 <h3 id={step.id} className="ml-[-4px] text-lg font-bold">
-                  📍 Step {stepIndex + 1}: {getStepName(step)}
+                  📍 {t('step')} {stepIndex + 1}: {t(step.agentName + '-step')}
                 </h3>
                 <ul className="flex flex-col gap-2">
                   {step.tasks
@@ -154,6 +156,7 @@ function PlanTaskView({ task }: { task: ThinkingTask }) {
   }, [task]);
   const reason = task.payload.reason;
   const markdown = `## ${plan.title ?? ""}\n\n${plan.steps?.map((step) => `- **${step.title ?? ""}**\n\n${step.description ?? ""}`).join("\n\n") ?? ""}`;
+  const { t } = useTranslation();
 
   useOnStateChangeEffect(
     // TODO: switch to thinking state
@@ -184,11 +187,11 @@ function PlanTaskView({ task }: { task: ThinkingTask }) {
               <TooltipTrigger asChild>
                 <AccordionTrigger className="flex w-fit flex-none items-center gap-2 rounded-2xl border px-3 py-1 text-sm hover:no-underline [&[data-state=open]>svg]:rotate-180">
                   <Atom className="h-4 w-4" />
-                  <span>Deep Thought</span>
+                  <span>{t('deepThought')}</span>
                 </AccordionTrigger>
               </TooltipTrigger>
               <TooltipContent side="left">
-                <p>{isThinkingCollapsed ? "Show thought" : "Hide thought"}</p>
+                <p>{isThinkingCollapsed ? t("showThought") : t("hideThought")}</p>
               </TooltipContent>
             </Tooltip>
             <AccordionContent>
