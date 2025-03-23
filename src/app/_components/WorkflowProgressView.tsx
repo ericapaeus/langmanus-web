@@ -49,7 +49,7 @@ export function WorkflowProgressView({
     <div className="flex flex-col gap-4">
       <div className={cn("flex overflow-hidden rounded-2xl border", className)}>
         <aside className="flex w-[220px] shrink-0 flex-col border-r bg-[rgba(0,0,0,0.02)]">
-          <div className="shrink-0 px-4 py-4 font-medium">Flow</div>
+          <div className="shrink-0 px-4 py-4 font-medium">{t('flow')}</div>
           <ol className="flex grow list-disc flex-col gap-4 px-4 py-2">
             {steps.map((step) => (
               <li

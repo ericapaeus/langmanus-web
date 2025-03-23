@@ -15,6 +15,7 @@ import {
   TooltipTrigger,
 } from "~/components/ui/tooltip";
 import { cn } from "~/core/utils";
+import { useTranslation } from '~/i18n/useTranslation';
 
 export function Markdown({
   className,
@@ -57,6 +58,7 @@ export function Markdown({
 
 function CopyButton({ content }: { content: string }) {
   const [copied, setCopied] = useState(false);
+  const { t } = useTranslation();
   return (
     <Tooltip>
       <TooltipTrigger asChild>
@@ -84,7 +86,7 @@ function CopyButton({ content }: { content: string }) {
         </Button>
       </TooltipTrigger>
       <TooltipContent>
-        <p>Copy</p>
+        <p>{t("copy")}</p>
       </TooltipContent>
     </Tooltip>
   );

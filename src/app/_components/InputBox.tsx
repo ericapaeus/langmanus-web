@@ -248,7 +248,7 @@ export function InputBox({
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>{responding ? t("cancel") : t("send")}</p>
+              <p>{responding ? t("stop") : t("send")}</p>
             </TooltipContent>
           </Tooltip>
         </div>
