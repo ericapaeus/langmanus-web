@@ -52,7 +52,7 @@ interface I18nState {
   initialize: (delay?: number) => void;
 }
 
-export const useI18nStore = create<I18nState>((set, get) => ({
+export const useI18nStore = create<I18nState>((set) => ({
   lang: 'en',
   translations: {},
   isLoading: true,

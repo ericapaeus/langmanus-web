@@ -1,12 +1,12 @@
-import { useTranslation, languages } from '~/i18n/useTranslation';
-import { useI18nStore } from '~/i18n/store';
+import { Button } from '~/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu';
-import { Button } from '~/components/ui/button';
+import { useI18nStore } from '~/i18n/store';
+import { useTranslation, languages } from '~/i18n/useTranslation';
 
 const LanguageSelector = () => {
   const { lang, setLang } = useI18nStore();
@@ -19,7 +19,7 @@ const LanguageSelector = () => {
             <line x1="2" y1="12" x2="22" y2="12" />
             <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
           </svg>
-          {languages.find(l => l.code === lang)?.name || lang}
+          {languages.find(l => l.code === lang)?.name ?? lang}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

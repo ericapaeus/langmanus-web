@@ -1,14 +1,15 @@
 "use client";
 
-import { useI18nStore, LanguageCode } from './store';
 import { useEffect } from 'react';
-import zhs from './zhs.json';
-import zht from './zht.json';
+
+import en from './en.json';
+import fr from './fr.json';
 import ja from './ja.json';
 import ko from './ko.json';
 import ru from './ru.json';
-import fr from './fr.json';
-import en from './en.json';
+import { useI18nStore, type LanguageCode } from './store';
+import zhs from './zhs.json';
+import zht from './zht.json';
 
 const translationsMap = {
   'zhs': zhs,
@@ -48,7 +49,7 @@ export const useTranslation = () => {
   }, [initialize]);
 
   useEffect(() => {
-    const loadTranslations = async () => {
+    const loadTranslations = () => {
       try {
         // setLoading(true);
         setError(null);
@@ -64,7 +65,7 @@ export const useTranslation = () => {
   }, [lang, setTranslations, setError, setLoading]);
 
   return {
-    t: (key: string) => translations[key] || key,
+    t: (key: string) => translations[key] ?? key,
     lang,
     isLoading,
     error,

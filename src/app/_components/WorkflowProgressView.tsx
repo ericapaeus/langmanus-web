@@ -1,6 +1,6 @@
 import { parse } from "best-effort-json-parser";
 import { useMemo, useRef, useState } from "react";
-import { useTranslation } from '~/i18n/useTranslation';
+
 
 import { useAutoScrollToBottom } from "~/components/hooks/useAutoScrollToBottom";
 import { useOnStateChangeEffect } from "~/components/hooks/useOnStateChangeEffect";
@@ -20,8 +20,8 @@ import { cn } from "~/core/utils";
 import {
   type ThinkingTask,
   type Workflow,
-  type WorkflowStep,
 } from "~/core/workflow";
+import { useTranslation } from '~/i18n/useTranslation';
 
 import { Markdown } from "./Markdown";
 import { ToolCallView } from "./ToolCallView";
@@ -207,23 +207,4 @@ function PlanTaskView({ task }: { task: ThinkingTask }) {
       </div>
     </li>
   );
-}
-
-function getStepName(step: WorkflowStep) {
-  switch (step.agentName) {
-    case "browser":
-      return "Browsing Web";
-    case "coder":
-      return "Coding";
-    case "file_manager":
-      return "File Management";
-    case "planner":
-      return "Planning";
-    case "researcher":
-      return "Researching";
-    case "supervisor":
-      return "Thinking";
-    default:
-      return step.agentName;
-  }
 }

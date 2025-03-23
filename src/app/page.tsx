@@ -3,13 +3,13 @@
 import { nanoid } from "nanoid";
 import { useCallback, useRef } from "react";
 
+import { LoadingScreen } from "~/app/_components/LoadingScreen";
 import { useAutoScrollToBottom } from "~/components/hooks/useAutoScrollToBottom";
 import { ScrollArea } from "~/components/ui/scroll-area";
 import { TooltipProvider } from "~/components/ui/tooltip";
 import { sendMessage, useInitTeamMembers, useStore } from "~/core/store";
 import { cn } from "~/core/utils";
 import { useTranslation } from '~/i18n/useTranslation';
-import { LoadingScreen } from "~/app/_components/LoadingScreen";
 
 import { AppHeader } from "./_components/AppHeader";
 import { InputBox } from "./_components/InputBox";
